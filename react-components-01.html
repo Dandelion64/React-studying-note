@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>REACT-COMPONENTS</title>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/babel">
+            const root = ReactDOM.createRoot(document.querySelector("#root"));
+            
+            const Welcome = (props) => {
+                return <h2>Hello, {props.name}</h2>
+            };
+            
+            const element = <Welcome name="Dandelion" />;
+            root.render(element);
+
+            // 過程如下
+            // 1. 對 <Welcome name="Dandelion" /> 這個 element 呼叫 root.render()
+            // 2. React 以 {name: 'Dandelion'} 傳入 Welcome component 並呼叫
+            // 3. Welcome component 回傳 <h2>Hello, Dandelion</h2> 這個 element
+            // 4. React DOM 有效的將 DOM 更新
+        </script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react@18/umd/react.production.min.js"
+        ></script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+        ></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </body>
+</html>
