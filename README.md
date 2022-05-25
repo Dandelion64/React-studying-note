@@ -1,4 +1,4 @@
 # React-studying-note
 
-Learning Reac by offical docs.
+Learning React by offical docs. <br />
 https://reactjs.org/docs/getting-started.html
