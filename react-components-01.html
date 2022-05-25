@@ -8,13 +8,14 @@
     </head>
     <body>
         <div id="root"></div>
+        <div id="root2"></div>
         <script type="text/babel">
             const root = ReactDOM.createRoot(document.querySelector("#root"));
-            
+
             const Welcome = (props) => {
-                return <h2>Hello, {props.name}</h2>
+                return <h2>Hello, {props.name}</h2>;
             };
-            
+
             const element = <Welcome name="Dandelion" />;
             root.render(element);
 
@@ -23,6 +24,22 @@
             // 2. React 以 {name: 'Dandelion'} 傳入 Welcome component 並呼叫
             // 3. Welcome component 回傳 <h2>Hello, Dandelion</h2> 這個 element
             // 4. React DOM 有效的將 DOM 更新
+
+            const root2 = ReactDOM.createRoot(document.querySelector("#root2"));
+
+            const App = (props) => {
+                return (
+                    <div>
+                        <Welcome name="Sara" />
+                        <Welcome name="Cahal" />
+                        <Welcome name="Edite" />
+                    </div>
+                );
+            }
+
+            root2.render(<App />);
+
+
         </script>
         <script
             crossorigin
