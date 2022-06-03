@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>REACT-STATE-AND-LIFECYCLE-01</title>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/babel">
+            // Do Not Modify State Directly
+
+            // Wrong
+            this.state.comment = "Hello";
+
+            // Correct
+            this.setState({ comment: "Hello" });
+
+            // State Updates May Be Asynchronous
+
+            // Wrong
+            this.setState({
+                counter: this.state.counter + this.props.increment,
+            });
+
+            // Correct
+            this.setState((state, props) => {
+                counter: state.counter + props.increment
+            });
+
+            // It also works with regular functions:
+
+            this.setState(function (state, props) {
+                return {
+                    counter: state.counter + props.increment
+                };
+            });
+
+            // State Updates are Merged
+
+            class Xx extends X {
+                constructor(props) {
+                    super(props);
+                    this.state = {
+                        posts: [],
+                        comments: [],
+                    };
+                }
+
+                componentDidMount() {
+                    fetchPosts().then((response) => {
+                        this.setState({
+                            posts: response.posts,
+                        });
+                    });
+
+                    fetchComments().then((response) => {
+                        this.setState({
+                            comments: response.comments,
+                        });
+                    });
+                }
+            }
+
+            // The merging is shallow, so this.setState({comments}) leaves this.state.posts intact, but completely replaces this.state.comments.
+        </script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react@18/umd/react.production.min.js"
+        ></script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+        ></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </body>
+</html>
