@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Day 05</title>
+        <style type="text/css">
+            /**
+            * Credit
+            * counter desgin is from dribbble (https://dribbble.com/shots/5539678-Stepper-VI)
+            * chevron icons are from font-awesome (https://fontawesome.com/icons/chevron-down?style=solid)
+            **/
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                width: 100%;
+                background-color: #f26072;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .container {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+            }
+
+            .number {
+                font-size: 72px;
+                color: #fbf5f5;
+                font-family: Verdana;
+                line-height: 1.75em;
+                text-align: center;
+                user-select: none;
+            }
+
+            .chevron {
+                background: transparent center center;
+                background-repeat: no-repeat;
+                cursor: pointer;
+                width: 70px;
+                height: 70px;
+                transition: background-image 0.3s;
+            }
+
+            .chevron-up {
+                background-image: url("data:image/svg+xml, %3Csvg aria-hidden='true' focusable='false' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%23f6909c' d='M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z'%3E%3C/path%3E%3C/svg%3E");
+            }
+
+            .chevron-up:hover {
+                background-image: url("data:image/svg+xml, %3Csvg aria-hidden='true' focusable='false' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%23fbf5f5' d='M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z'%3E%3C/path%3E%3C/svg%3E");
+            }
+
+            .chevron-down {
+                background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%23f6909c' d='M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z'%3E%3C/path%3E%3C/svg%3E");
+            }
+
+            .chevron-down:hover {
+                background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%23fbf5f5' d='M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z'%3E%3C/path%3E%3C/svg%3E");
+            }
+
+            .visibility-hidden {
+                visibility: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/babel">
+            const root = ReactDOM.createRoot(document.querySelector("#root"));
+
+            // useState 是這系列中介紹的第一個 React Hook
+            // React 中開頭為 use 的 function 都是 Hook
+            // Step 1:
+            const { useState } = React;
+
+            const Counter = () => {
+                // Step 2: 解構賦值同時重新命名
+                // useState() 方法回傳一個陣列
+                // 其中第 0 個元素為 state
+                // 第 1 個元素為更改此 state 同時通知 react render 的方法
+                // 但 render() 只有在資料確實更新時才會 render
+                let [count, setCount] = useState(5);
+
+                return (
+                    <div className="container" style={shadow}>
+                        {/* 一個 JSX Element 只能有一個根節點 */}
+                        {console.log("render")}
+                        {/* 利用 CSS 隱藏 注意會被使用者輕易解開 */}
+                        <div
+                            className={`chevron chevron-up ${count >= 10 && 'visibility-hidden'}`}
+                            onClick={() => {
+                                setCount(++count);
+                                console.log(`current Count is ${count}`);
+                            }}
+                        ></div>
+                        {/* 使用變數 */}
+                        <div
+                            className="number"
+                            style={{
+                                color: "#FFE8E8",
+                                textShadow: "2px 2px #434a54",
+                            }}
+                        >
+                            {count}
+                        </div>
+                        <div
+                            className={`chevron chevron-down ${count <= 0 && 'visibility-hidden'}`}
+                            onClick={() => {
+                                setCount(--count);
+                                console.log(`current Count is ${count}`);
+                            }}
+                        ></div>
+                    </div>
+                );
+            };
+
+            const shadow = {
+                boxShadow: "0 0 10px 10px #eaeaea",
+                padding: 20, // 省略 px，樣式會自動帶入單位變成 '20px'
+                margin: 20,
+            };
+
+            // 兩種寫法
+            // ReactDOM.render(<Counter />, document.querySelector('#root'));
+            root.render(
+                <div
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-around",
+                    }}
+                >
+                    <Counter />
+                    <Counter />
+                    <Counter />
+                </div>
+            );
+        </script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react@18/umd/react.production.min.js"
+        ></script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+        ></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </body>
+</html>
