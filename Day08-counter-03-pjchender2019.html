@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Day 08</title>
+        <title>Day 08 & 11</title>
         <style type="text/css">
             /**
             * Credit
@@ -79,13 +79,14 @@
             // Step 1:
             const { useState } = React;
 
-            const Counter = () => {
+            const Counter = (props) => {
                 // Step 2: 解構賦值同時重新命名
                 // useState() 方法回傳一個陣列
                 // 其中第 0 個元素為 state
                 // 第 1 個元素為更改此 state 同時通知 react render 的方法
                 // 但 render() 只有在資料確實更新時才會 render
-                let [count, setCount] = useState(5);
+                const { startingValue, maxValue, minValue } = props;
+                let [count, setCount] = useState(startingValue);
 
                 // const handleIncrement = () => {
                 //     setCount(++count);
@@ -109,7 +110,7 @@
                         {console.log('render')}
                         {/* 利用 CSS 隱藏 注意會被使用者輕易解開 */}
                         <div
-                            className={`chevron chevron-up ${count >= 10 && 'visibility-hidden'}`}
+                            className={`chevron chevron-up ${count >= maxValue && 'visibility-hidden'}`}
                             onClick={handleClick('increment')}
                         ></div>
                         {/* 使用變數 */}
@@ -123,7 +124,7 @@
                             {count}
                         </div>
                         <div
-                            className={`chevron chevron-down ${count <= 0 && 'visibility-hidden'}`}
+                            className={`chevron chevron-down ${count <= minValue && 'visibility-hidden'}`}
                             onClick={handleClick('decrement')}
                         ></div>
                     </div>
@@ -136,7 +137,8 @@
                 margin: 20
             };
 
-            const counters = Array.from({ length: 8 }, (value, index) => index)
+            // const counters = Array.from({ length: 8 });
+            const counters = Array.from({ length: 8 }, (value, index) => index+1)
 
             root.render(
                 <div
@@ -145,7 +147,13 @@
                         flexWrap: 'wrap'
                     }}
                 >
-                    {counters.map((item) => <Counter />)}
+                    {counters.map((item) => 
+                        <Counter 
+                            startingValue={(item * 2 - 1) * 5}
+                            maxValue={(item * 2) * 5}
+                            minValue={(item * 2 - 2) * 5}
+                        />
+                    )}
                 </div>
             );
         </script>
