@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Day 05</title>
+        <title>Day 08</title>
         <style type="text/css">
             /**
             * Credit
@@ -72,7 +72,7 @@
     <body>
         <div id="root"></div>
         <script type="text/babel">
-            const root = ReactDOM.createRoot(document.querySelector("#root"));
+            const root = ReactDOM.createRoot(document.querySelector('#root'));
 
             // useState 是這系列中介紹的第一個 React Hook
             // React 中開頭為 use 的 function 都是 Hook
@@ -104,9 +104,9 @@
                 }
 
                 return (
-                    <div className="container" style={shadow}>
+                    <div className='container' style={shadow}>
                         {/* 一個 JSX Element 只能有一個根節點 */}
-                        {console.log("render")}
+                        {console.log('render')}
                         {/* 利用 CSS 隱藏 注意會被使用者輕易解開 */}
                         <div
                             className={`chevron chevron-up ${count >= 10 && 'visibility-hidden'}`}
@@ -114,10 +114,10 @@
                         ></div>
                         {/* 使用變數 */}
                         <div
-                            className="number"
+                            className='number'
                             style={{
-                                color: "#FFE8E8",
-                                textShadow: "2px 2px #434a54",
+                                color: '#FFE8E8',
+                                textShadow: '2px 2px #434a54',
                             }}
                         >
                             {count}
@@ -131,15 +131,13 @@
             };
 
             const shadow = {
-                boxShadow: "0 0 10px 10px #eaeaea",
-                padding: 20, // 省略 px，樣式會自動帶入單位變成 '20px'
-                margin: 20,
+                boxShadow: '0 0 10px 10px #eaeaea',
+                padding: 20,
+                margin: 20
             };
 
             const counters = Array.from({ length: 8 }, (value, index) => index)
 
-            // 兩種寫法
-            // ReactDOM.render(<Counter />, document.querySelector('#root'));
             root.render(
                 <div
                     style={{
