@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Day 09-11</title>
+        <link
+            rel="stylesheet"
+            href="./fontawesome-free-6.1.1-web/css/all.min.css"
+        />
+        <style type="text/css">
+            /**
+                * Design Credit:
+                * https://dribbble.com/shots/4241423-Exchanger-landing-page
+            **/
+
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: Verdana;
+                background: rgb(28, 78, 154);
+                background: linear-gradient(
+                    237deg,
+                    rgba(28, 78, 154, 1) 48%,
+                    rgba(44, 110, 206, 1) 85%,
+                    rgba(45, 123, 238, 1) 100%
+                );
+            }
+
+            .container {
+                display: flex;
+                flex-direction: column;
+                box-shadow: 1px 1px 10px 1px #333;
+                border-radius: 7px;
+                background: white;
+                min-width: 440px;
+                min-height: 320px;
+            }
+
+            .card-header {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 50px;
+                border-top-left-radius: 6px;
+                border-top-right-radius: 6px;
+                background-color: #2d7bee;
+                color: white;
+                font-size: 20px;
+            }
+
+            .card-body {
+                flex: 1;
+                padding: 30px;
+            }
+
+            .unit-control {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 45px;
+            }
+
+            .unit {
+                display: inline-flex;
+                background-color: #2d7bee;
+                align-items: center;
+                justify-content: center;
+                width: 75px;
+                height: 35px;
+                color: white;
+                border-radius: 3px;
+            }
+
+            .exchange-icon {
+                color: #a8aeba;
+            }
+
+            .angle-icon {
+                color: #b0c9f6;
+            }
+
+            .converter {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .converter-title {
+                color: #a8aeba;
+                font-weight: bold;
+                margin-bottom: 12px;
+            }
+
+            .card-footer {
+                min-height: 40px;
+                margin: 5px;
+                border-bottom-left-radius: 6px;
+                border-bottom-right-radius: 6px;
+                background-color: #2d7bee;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+            }
+
+            .input-number {
+                font-size: 32px;
+                max-width: 170px;
+                flex: 1;
+                display: inline-block;
+                background: transparent;
+                border: none;
+                outline: none;
+                font-family: Courier;
+                color: #2d7bee;
+                font-weight: bold;
+            }
+
+            .text-right {
+                text-align: right;
+            }
+            .flex-1 {
+                flex: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/babel">
+            const root = ReactDOM.createRoot(document.querySelector("#root"));
+
+            // 複習: 一個 JSX 只能有一個根節點
+            // 所以有多個子節點時可以
+            // 1. 多包一層 <div>
+            // 2. 使用 <React.Fragment> 注意封閉標籤是前綴的
+            // JSXFunc = () => (
+            //    <React.Fragment>
+            //        <div className='container'/>
+            //        <div className='container'/>
+            //    </React.Fragment>    
+            // )
+            // 還可以再簡寫成 <> 和 </>
+
+            // props:
+            // 三種寫法:
+
+            // 1.
+            // function ChildComponent(props) {
+            //     return <h1>Hello, {props.firstName} {props.lastName}</h1>; 
+            // }
+            // const element = <ChildComponent firstName="Aaron" lastName="Chen" />;
+
+            // 2.
+            // function ChildComponent(props) {
+            //     const { firstName, lastName } = props;
+            //     return <h1>Hello, {firstName} {lastName}</h1>;
+            // }
+
+            // 3. 連 props 都省略
+            // function ChildComponent({ firstName, lastName }) {
+            //     return <h1>Hello, {firstName} {lastName}</h1>;
+            // }
+
+            const { useState } = React;
+
+            const UnitControl = () => (
+                <div className="unit-control">
+                    <div className="unit">Mbps</div>
+                    <span className="exchange-icon fa-fw fa-stack">
+                        <i className="far fa-circle fa-stack-2x" />
+                        <i className="fas fa-exchange-alt fa-stack-1x" />
+                    </span>
+                    <div className="unit">MB/s</div>
+                </div>
+            );
+
+            const CardFooter = (props) => {
+                const { inputValue } = props;
+                {/* console.log(props) */}
+                let criteria;
+
+                if (!inputValue) {
+                    criteria = {
+                        title: '---',
+                        backgroundColor: 'd3d8e2'
+                    };
+                } else if (inputValue < 15) {
+                    criteria = {
+                        title: 'SLOW',
+                        backgroundColor: '#ee362d',
+                    };
+                } else if (inputValue < 40) {
+                    criteria = {
+                        title: 'GOOD',
+                        backgroundColor: '#1b82f1',
+                    };
+                } else if (inputValue >= 40) {
+                    criteria = {
+                        title: 'FAST',
+                        backgroundColor: '#13d569',
+                    };
+                }
+                return (
+                    <div 
+                        className="card-footer"
+                        style={{
+                            backgroundColor: criteria.backgroundColor
+                        }}
+                    >
+                        {criteria.title}
+                    </div>
+                );
+            }
+            
+            const SpeedConverter = () => {
+                const [inputValue, setInputValue] = useState(0);
+    
+                const handleInputChange = (e) => {
+                    const { value } = e.target;
+                    setInputValue(value);
+                }
+
+                return (
+                    <div className="container">
+                        <div className="card-header">
+                            Network Speed Converter
+                        </div>
+                        <div className="card-body">
+                            <UnitControl />
+                            <div className="converter">
+                                <div className="flex-1">
+                                    <div className="converter-title">Set</div>
+                                    {/* 取得使用者輸入的內容 */}
+                                    <input
+                                        type="number"
+                                        className="input-number"
+                                        min="0"
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                <span
+                                    className="angle-icon fa-2x"
+                                    style={{
+                                        marginTop: 30,
+                                    }}
+                                >
+                                    <i className="fas fa-angle-right" />
+                                </span>
+                                <div className="text-right flex-1">
+                                    <div className="converter-title">Show</div>
+                                    <input
+                                        className="input-number text-right"
+                                        type="text"
+                                        value={inputValue / 8}
+                                        disabled
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <CardFooter inputValue={inputValue} />
+                    </div>
+                );
+            };
+
+            root.render(<SpeedConverter />);
+        </script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react@18/umd/react.production.min.js"
+        ></script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+        ></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </body>
+</html>
