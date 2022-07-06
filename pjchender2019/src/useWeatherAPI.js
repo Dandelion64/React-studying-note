@@ -6,12 +6,15 @@ import { useState, useEffect, useCallback } from 'react';
 import axios from "axios";
 
 const fetchCurrentWeather = (locationName) => {
+    // console.log(locationName);
     return axios.get(
         `https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0003-001?Authorization=CWB-E2349193-68E5-4124-B14D-C0226B44B958&locationName=${locationName}`
     )
         .then((result) => {
             // Step 1: 定義 'locationData' 取出需要的資料
+            // console.log(result);
             const locationData = result.data.records.location[0];
+            // console.log(locationData);
 
             // Step 2: 將風速（WDSD）、氣溫（TEMP）和濕度（HUMD）的資料取出
             // 利用 reduce 將之丟到物件中
@@ -36,6 +39,7 @@ const fetchCurrentWeather = (locationName) => {
 }
 
 const fetchWeatherForecast = (cityName) => {
+    // console.log(cityName);
     return axios.get(
         `https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-E2349193-68E5-4124-B14D-C0226B44B958&locationName=${cityName}`
     )
@@ -107,20 +111,6 @@ const useWeatherAPI = (currentLocation) => {
         // 因為 fetchingData 沒有相依到 React 組件中的資料狀態
         // 所以 dependencies 陣列中不帶入元素
     }, [locationName, cityName]);
-
-        // 在這裡解構賦值的話
-    // 後面可以寫得比較簡潔
-    // const {
-    //     observationTime,
-    //     locationName,
-    //     temperature,
-    //     windSpeed,
-    //     description,
-    //     weatherCode,
-    //     rainPossibility,
-    //     comfortability,
-    //     isLoading,
-    // } = weatherElement;
 
     // 把原本 useEffect 的部分搬移進來
     // Syntax:
