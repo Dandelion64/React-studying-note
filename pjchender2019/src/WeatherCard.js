@@ -140,9 +140,22 @@ const WeatherCard = (props) => {
     // 解構賦值
     // 取得 setCurrentPage 方法
     const { weatherElement, moment, fetchData, setCurrentPage, cityName } = props;
+
+    // 在這裡解構賦值的話
+    // 後面可以寫得比較簡潔
+    const {
+        observationTime,
+        temperature,
+        windSpeed,
+        description,
+        weatherCode,
+        rainPossibility,
+        comfortability,
+        isLoading,
+    } = weatherElement;
     
     return (
-        <WeatherCardWrapper noNeedToBeHidden={weatherElement.description}>
+        <WeatherCardWrapper noNeedToBeHidden={description}>
             {/* 當齒輪被點擊的時候將 currentPage 改成 WeatherSetting */}
             <Cog onClick={() => setCurrentPage('WeatherSetting')} />
             {/* 將 cityName 代入 */}
@@ -153,39 +166,39 @@ const WeatherCard = (props) => {
                 {/* {new Intl.DateTimeFormat("zh-TW", {
                     hour: "numeric",
                     minute: "numeric",
-                }).format(new Date(weatherElement.observationTime))}{" "} */}
-                {weatherElement.description} {weatherElement.comfortability}
+                }).format(new Date(observationTime))}{" "} */}
+                {description} {comfortability}
             </Description>
             <CurrentWeather>
                 <Temperature>
                     {/* 優化溫度呈現 */}
-                    {Math.round(weatherElement.temperature)}{" "}
+                    {Math.round(temperature)}{" "}
                     <Celsius>°C</Celsius>
                 </Temperature>
                 <WeatherIcon
-                    currentWeatherCode={weatherElement.weatherCode}
+                    currentWeatherCode={weatherCode}
                     moment={moment || 'day'}
                 />
             </CurrentWeather>
             <AirFlow>
                 <AirFlowIcon />
-                {weatherElement.windSpeed} m/h
+                {windSpeed} m/h
             </AirFlow>
             <Rain>
                 <RainIcon />
                 {/* 針對濕度進行四捨五入處理精度不足問題 */}
-                {Math.round(weatherElement.rainPossibility)} %
+                {Math.round(rainPossibility)} %
             </Rain>
             {/* 將最後觀測時間移到畫面右下角呈現 */}
             <Refresh 
                 onClick={fetchData}
-                isLoading={weatherElement.isLoading}>
+                isLoading={isLoading}>
                 最後觀測時間：
                 {new Intl.DateTimeFormat("zh-TW", {
                     hour: "numeric",
                     minute: "numeric",
-                }).format(new Date(weatherElement.observationTime))}{" "}
-                {weatherElement.isLoading ? <LoadingIcon /> : <RefreshIcon />}
+                }).format(new Date(observationTime))}{" "}
+                {isLoading ? <LoadingIcon /> : <RefreshIcon />}
             </Refresh>
         </WeatherCardWrapper>
     )
