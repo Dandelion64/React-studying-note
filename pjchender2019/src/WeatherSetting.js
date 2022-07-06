@@ -127,10 +127,11 @@ const WeatherSetting = (props) => {
         }
     };
 
+    // renderCount.current += 1;
+    // console.log("render", renderCount.current)
+
     return (
         <WeatherSettingWrapper>
-            {(renderCount.current += 1)}
-            {console.log("render", renderCount.current)}
             <Title>設定</Title>
             {/* 注意 label 的 for 變成 htmlFor */}
             <StyledLabel htmlFor="location">地區</StyledLabel>
