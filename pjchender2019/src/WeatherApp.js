@@ -103,6 +103,9 @@ const WeatherApp = () => {
         const location = sunriseAndSunsetData.find(
             (data) => data.locationName === locationName
         );
+
+        // console.log(locationName);
+        // console.log(location);
     
         if (!location) return null;
     
