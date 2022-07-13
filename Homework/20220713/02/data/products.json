@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "category": "Shirt",
+        "title": "咖啡色純棉 T-Shirt",
+        "imgsrc": "https://i.imgur.com/1GrakTl.jpg",
+        "price": "44.00",
+        "quantity": 1
+    }, 
+    {
+        "id": 2,
+        "category": "Shirt",
+        "title": "白色純棉 T-Shirt",
+        "imgsrc": "https://i.imgur.com/ba3tvGm.jpg",
+        "price": "42.95",
+        "quantity": 2
+    },
+    {
+        "id": 3,
+        "category": "Shirt",
+        "title": "黑色純棉 T-Shirt",
+        "imgsrc": "https://i.imgur.com/pHQ3xT3.jpg",
+        "price": "45.25",
+        "quantity": 3
+    }
+]
