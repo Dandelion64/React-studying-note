@@ -1,0 +1,13 @@
+input:invalid {
+    border-color: #900;
+    background-color: #fdd;
+}
+
+input:focus:invalid {
+    outline: none;
+}
+
+.error{
+    font-size:10px;
+    color:#900
+}
